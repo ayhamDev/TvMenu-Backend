@@ -1,20 +1,33 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
+// Dev env (sqlite)
+// SQLite Config
 const sql = new Sequelize({
-  // SQLite Config
   dialect: "sqlite",
-  database: "./db/mydb.db",
-
-  //  Microsoft SQL Server Config
-  // host: "<YOUR_HOST>",
-  // database: 'tvmenu',
-  // username: "<user_name>",
-  // password: "<user_password>",
+  storage: "./database.sqlite",
 
   define: {
-    timestamps: true,
+    timestamps: false,
   },
 });
+
+//   //  Microsoft SQL Server Config
+// const sql = new Sequelize("TVmenu","TVBackendUser","Hello!@!@!@2023A",{
+//   host: "localhost",
+//   dialect: "mssql",
+//   port: '1433',
+//   pool: {
+//     min:0,
+//     max: 10,
+//     idle:25000,
+//     acquire: 25000,
+//     requestTimeout: 30000
+//   },
+//    dialectOptions: {
+//     options: {
+//       "encrypt": false
+//     }
+//   },
 
 const Device = sql.define("device", {
   id: {
@@ -31,7 +44,7 @@ const Device = sql.define("device", {
     allowNull: false,
   },
   Display_Type: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   Web_Url: {
