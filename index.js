@@ -4,18 +4,15 @@ const app = express();
 const { createServer } = require("http");
 const PORT = process.env.PORT || 4444;
 const cors = require("cors");
-const { sql, device } = require("./utils/db");
+const { sql, device, UnRegisteredDevice } = require("./utils/db");
 const { query, body, validationResult } = require("express-validator");
+const requestIp = require("request-ip");
+const moment = require("moment/moment");
 const { Server } = require("socket.io");
 const HttpServer = createServer(app);
 
-const io = new Server(HttpServer, {
-  cors: {
-    origin: "*",
-  },
-});
-
 app.use(cors());
+app.use(requestIp.mw());
 
 // db Migrations
 // sql
@@ -28,6 +25,7 @@ app.use(cors());
 //   });
 
 // db production
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 sql
   .authenticate()
@@ -37,21 +35,107 @@ sql
   .catch((err) => {
     console.log(err);
   });
+const io = new Server(HttpServer, {
+  cors: {
+    origin: ["*"],
+  },
+});
 io.use(async (socket, next) => {
-  const { Device_ID, Token } = socket.handshake.auth;
-  if (!Device_ID || !Token) return next(new Error("unauthorized"));
+  const { Device_ID, Device_Token } = socket.handshake.auth;
+  if (!Device_ID || !Device_Token) return next(new Error("unauthorized"));
   const Device = await device.findOne({
-    where: { Device_ID, Device_Token: Token },
+    where: { Device_ID, Device_Token },
   });
-  if (!Device) return next(new Error("Device Not Found"));
-  socket.data = Device;
-  next();
+
+  if (!Device) {
+    const RegisteredDevice = await UnRegisteredDevice.findOne({
+      where: {
+        Unregistered_Device_ID: Device_ID,
+        Device_Token: Device_Token,
+      },
+    });
+    if (RegisteredDevice) {
+      RegisteredDevice.Requested_Count = RegisteredDevice.Requested_Count + 1;
+      RegisteredDevice.Last_Date_Time_Hit = Date.now();
+      RegisteredDevice.IP_Address = socket.conn.remoteAddress;
+      let Logs = JSON.parse(RegisteredDevice.Log_History);
+      Logs.push({
+        IP_Address: socket.conn.remoteAddress,
+        time: Date.now(),
+        Date: moment(Date.now()).format("LLLL"),
+      });
+      RegisteredDevice.Log_History = JSON.stringify(Logs);
+      await RegisteredDevice.save();
+    } else {
+      await UnRegisteredDevice.create({
+        Unregistered_Device_ID: Device_ID,
+        Device_Token,
+        IP_Address: socket.conn.remoteAddress,
+        First_Date_Time_Hit: Date.now(),
+        Requested_Count: 1,
+        Log_History: JSON.stringify([
+          {
+            IP_Address: socket.conn.remoteAddress,
+            timestamp: Date.now(),
+            Date: moment(Date.now()).format("LLLL"),
+          },
+        ]),
+      });
+    }
+    next(new Error("Device Not Found"));
+  } else {
+    if (Device.Status != "Active")
+      return next(
+        new Error(
+          Device.dataValues.Status_Message || "This Device Is Not Active."
+        )
+      );
+    socket.data = Device;
+
+    next();
+  }
 });
 io.on("connection", async (socket) => {
+  const { Device_ID, Device_Token } = socket.handshake.auth;
+
+  const SocketDevice = await device.findOne({
+    where: { Device_ID, Device_Token },
+  });
+  SocketDevice.connectionID = socket.id;
+  await SocketDevice.save();
+  socket.on("disconnect", async () => {
+    const SocketDevice = await device.findOne({
+      where: { Device_ID, Device_Token },
+    });
+    if (!SocketDevice) return null;
+    SocketDevice.connectionID = null;
+    await SocketDevice.save();
+  });
+
   io.to(socket.id).emit("device_data", socket.data);
 });
 app.get("/ping", (req, res) => {
-  res.send("ping");
+  res.send("pong");
+});
+// Is Admin Middlerware
+app.use((req, res, next) => {
+  const { api_key } = req.headers;
+  if (!api_key)
+    return res.status(401).json({ message: "Api Key Is Required." });
+  // invalid api key > 401 no access
+  if ((process.env.API_KEY || "myapikey") != api_key)
+    return res.status(401).json({
+      message: "invalid Api Key.",
+    });
+  // valid api key > Next
+  next();
+});
+app.get("/unregistered", async (req, res) => {
+  const Devices = await UnRegisteredDevice.findAll();
+  for (let index = 0; index < Devices.length; index++) {
+    Devices[index].Log_History = JSON.parse(Devices[index].Log_History);
+  }
+  res.json(Devices);
 });
 
 app.get(
@@ -66,16 +150,53 @@ app.get(
           "Device Not Found, The Device uuid is Invaild or The Token is Invaild",
       });
     const { Device_ID, Device_Token } = req.query;
-    try {
-      const Device = await device.findOne({
-        where: { Device_ID, Device_Token },
+    const Device = await device.findOne({
+      where: { Device_ID, Device_Token },
+    });
+    if (!Device) {
+      const RegisteredDevice = await UnRegisteredDevice.findOne({
+        where: {
+          Unregistered_Device_ID: Device_ID,
+          Device_Token: Device_Token,
+        },
       });
-      if (!Device)
-        return res.status(400).json({
-          message:
-            "Device Not Found, The Device uuid is Invaild or The Token is Invaild",
+      if (!RegisteredDevice) {
+        const Device = await UnRegisteredDevice.create({
+          Unregistered_Device_ID: Device_ID,
+          Device_Token,
+          IP_Address: req.clientIp,
+          First_Date_Time_Hit: Date.now(),
+          Requested_Count: 1,
+          Log_History: JSON.stringify([
+            {
+              IP_Address: req.clientIp,
+              timestamp: Date.now(),
+              Date: moment(Date.now()).format("LLLL"),
+            },
+          ]),
         });
-      res.json(Device);
+        res.json({
+          msg: "This Device Has Been Requested To Be Registered.",
+          status: 101,
+        });
+      } else {
+        RegisteredDevice.Requested_Count = RegisteredDevice.Requested_Count + 1;
+        RegisteredDevice.Last_Date_Time_Hit = Date.now();
+        RegisteredDevice.IP_Address = req.clientIp;
+        let Logs = JSON.parse(RegisteredDevice.Log_History);
+        Logs.push({
+          IP_Address: req.clientIp,
+          time: Date.now(),
+          Date: moment(Date.now()).format("LLLL"),
+        });
+        RegisteredDevice.Log_History = JSON.stringify(Logs);
+        await RegisteredDevice.save();
+        res.json({
+          msg: "This Device Has Been Requested To Be Registered.",
+          status: 101,
+        });
+      }
+    } else {
       // Update Last_Online_hit For The Next Request
       await device.update(
         {
@@ -83,24 +204,10 @@ app.get(
         },
         { where: { Device_ID, Device_Token } }
       );
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
+      res.json(Device);
     }
   }
 );
-
-// Is Admin Middlerware
-app.use((req, res, next) => {
-  const { api_key } = req.headers;
-  // invalid api key > 401 no access
-  if ((process.env.API_KEY || "myapikey") != api_key)
-    return res.status(401).json({
-      message: "invalid Api key",
-    });
-  // valid api key > Next
-  next();
-});
 app.post(
   "/",
   body("Device_ID").isString().notEmpty(),
@@ -134,6 +241,12 @@ app.post(
         Mp4_URL: req.body.Mp4_URL,
         Offline_Image: req.body.Offline_Image,
       });
+      await UnRegisteredDevice.destroy({
+        where: {
+          Unregistered_Device_ID: req.body.Device_ID,
+          Device_Token: req.body.Device_Token,
+        },
+      });
       res.json(CreatedDevice);
     } catch (err) {
       res.status(500).json(err);
@@ -148,17 +261,35 @@ app.delete(
     const result = validationResult(req);
     if (!result.isEmpty()) return res.status(400).json(result.array());
     try {
-      await device.destroy({
+      const SocketDevice = await device.findOne({
         where: {
           Device_ID: req.query.Device_ID,
           Device_Token: req.query.Device_Token,
         },
       });
-      res.json({
-        message: "Device deleted successfully",
-        Device_ID: req.query.Device_ID,
-        Device_Token: req.query.Device_Token,
-      });
+      if (!SocketDevice)
+        return res.json({
+          message: "Device Doesn't Exists",
+          Device_ID: req.query.Device_ID,
+          Device_Token: req.query.Device_Token,
+        });
+      try {
+        await device.destroy({
+          where: {
+            Device_ID: req.query.Device_ID,
+            Device_Token: req.query.Device_Token,
+          },
+        });
+        io.sockets.sockets.get(SocketDevice.connectionID)?.disconnect();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        res.json({
+          message: "Device deleted successfully",
+          Device_ID: req.query.Device_ID,
+          Device_Token: req.query.Device_Token,
+        });
+      }
     } catch (err) {
       res.status(400).json({
         message: "Failed to delete Device",
@@ -170,17 +301,17 @@ app.delete(
   }
 );
 
-app.put(
+app.patch(
   "/",
-  query("Device_ID").isString().notEmpty(),
-  query("Device_Token").isString().notEmpty(),
-  body("Device_ID").isString().notEmpty(),
-  body("Device_Token").isString().notEmpty(),
-  body("Display_Type").isNumeric().notEmpty(),
-  body("Web_Url").isString().notEmpty(),
-  body("Image_URL").isString().notEmpty(),
-  body("Mp4_URL").isString().notEmpty(),
-  body("Offline_Image").isString().notEmpty(),
+  query("Device_ID").isString().optional(),
+  query("Device_Token").isString().optional(),
+  body("Device_ID").isString().optional(),
+  body("Device_Token").isString().optional(),
+  body("Display_Type").isNumeric().optional(),
+  body("Web_Url").isString().optional(),
+  body("Image_URL").isString().optional(),
+  body("Mp4_URL").isString().optional(),
+  body("Offline_Image").isString().optional(),
   async (req, res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) return res.status(400).json(result.array());
@@ -196,35 +327,17 @@ app.put(
           message:
             "Device Not Found, The Device uuid is Invaild or The Token is Invaild",
         });
-      const DeviceNext = await device.findOne({
-        where: {
-          Device_ID: req.body.Device_ID,
-          Device_Token: req.body.Device_Token,
-        },
-      });
 
-      if (
-        DeviceNext &&
-        (req.body.Device_ID != req.query.Device_ID ||
-          req.body.Device_Token != req.query.Device_Token)
-      )
-        return res.status(400).json({
-          message: "Device With The Same uuid And token already exists",
-        });
-      FoundDevice.Device_ID = req.body.Device_ID;
-      FoundDevice.Device_Token = req.body.Device_Token;
-      FoundDevice.Display_Type = req.body.Display_Type;
-      FoundDevice.Web_Url = req.body.Web_Url;
-      FoundDevice.Image_URL = req.body.Image_URL;
-      FoundDevice.Offline_Image = req.body.Offline_Image;
-      FoundDevice.Mp4_URL = req.body.Mp4_URL;
       try {
-        const data = await FoundDevice.save();
-
-        io.emit(
-          `update://${req.query.Device_ID}@${req.query.Device_Token}`,
-          data.dataValues
-        );
+        for (const key in req.body) {
+          if (Object.hasOwnProperty.call(req.body, key)) {
+            FoundDevice[key] = req.body[key];
+          }
+        }
+        await FoundDevice.save();
+        if (FoundDevice.Status != "Active") {
+          io.sockets.sockets.get(FoundDevice.connectionID)?.disconnect();
+        }
         return res.json({
           message: "Device updated successfully",
           Device_ID: req.query.Device_ID,
@@ -239,7 +352,12 @@ app.put(
         });
       }
     } catch (err) {
-      return res.status(500).json(err);
+      console.log(err);
+      return res.status(500).json({
+        message: "Failed To Updated Device",
+        Device_ID: req.query.Device_ID,
+        device_Token: req.query.Device_Token,
+      });
     }
   }
 );

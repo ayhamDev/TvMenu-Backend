@@ -1,11 +1,11 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes, Model } = require("sequelize");
 
 // Dev env (sqlite)
 // SQLite Config
 const sql = new Sequelize({
   dialect: "sqlite",
   storage: "./database.sqlite",
-
+  logging: false,
   define: {
     timestamps: false,
   },
@@ -28,12 +28,70 @@ const sql = new Sequelize({
 //       "encrypt": false
 //     }
 //   },
-
-const Device = sql.define("device", {
+const UnRegisteredDevice = sql.define("unregistered_device", {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+  },
+  Unregistered_Device_ID: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  Device_Token: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  IP_Address: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  First_Date_Time_Hit: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  Last_Date_Time_Hit: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  Requested_Count: {
+    type: DataTypes.NUMBER,
+    allowNull: false,
+    defaultValue: 1,
+  },
+  Log_History: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
+const Device = sql.define("device", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  connectionID: {
+    type: DataTypes.STRING,
+    defaultValue: null,
+    allowNull: true,
+    onUpdate(...args) {
+      console.log(args);
+    },
+  },
+  Status: {
+    type: DataTypes.ENUM(["Active", "Suspended"]),
+    validate: {
+      isIn: {
+        args: [["Active", "Suspended"]],
+        msg: "Invalid Device Status.",
+      },
+    },
+    allowNull: false,
+    defaultValue: "Active",
+  },
+  Status_Message: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   Device_ID: {
     type: DataTypes.STRING,
@@ -69,4 +127,6 @@ const Device = sql.define("device", {
   },
 });
 
-(module.exports.sql = sql), (module.exports.device = Device);
+(module.exports.sql = sql),
+  (module.exports.device = Device),
+  (module.exports.UnRegisteredDevice = UnRegisteredDevice);
