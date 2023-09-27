@@ -1,0 +1,608 @@
+{
+	"info": {
+		"_postman_id": "1627064c-24bf-4283-8094-f93807e13654",
+		"name": "Main",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17180270",
+		"_collection_link": "https://web.postman.co/workspace/TvMenu~76b84211-dfa3-4e28-b7a1-eb35479678ff/collection/17180270-1627064c-24bf-4283-8094-f93807e13654?source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Device Table",
+			"item": [
+				{
+					"name": "Get Device",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:4444?Device_ID=fc6ef405e2764bfa&Device_Token=token",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"query": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa"
+								},
+								{
+									"key": "Device_Token",
+									"value": "token"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Device",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `",
+									"<style type=\"text/css\">",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+									"    .tftable tr {background-color:#ffffff;}",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+									"    .tftable tr:hover {background-color:#e0ffff;}",
+									"</style>",
+									"",
+									"<table class=\"tftable\" border=\"1\">",
+									"    <tr>",
+									"        <th>Connection ID</th>",
+									"        <th>Status</th>",
+									"        <th>ID</th>",
+									"        <th>Device ID</th>",
+									"        <th>Device Token</th>",
+									"        <th>Display Type</th>",
+									"        <th>Web URL</th>",
+									"        <th>Image URL</th>",
+									"        <th>MP4 URL</th>",
+									"        <th>Offline Image</th>",
+									"    </tr>",
+									"    ",
+									"    <tr>",
+									"        <td>{{response.connectionID}}</td>",
+									"        <td>{{response.Status}}</td>",
+									"        <td>{{response.id}}</td>",
+									"        <td>{{response.Device_ID}}</td>",
+									"        <td>{{response.Device_Token}}</td>",
+									"        <td>{{response.Display_Type}}</td>",
+									"        <td>{{response.Web_Url}}</td>",
+									"        <td>{{response.Image_URL}}</td>",
+									"        <td>{{response.Mp4_URL}}</td>",
+									"        <td>{{response.Offline_Image}}</td>",
+									"    </tr>",
+									"</table>",
+									"`;",
+									"",
+									"function constructVisualizerPayload() {",
+									"    return { response: pm.response.json() }",
+									"}",
+									"",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api_key",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"type": "text"
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"type": "text"
+								},
+								{
+									"key": "Display_Type",
+									"value": "3",
+									"description": "[1 | 2 |3]",
+									"type": "text"
+								},
+								{
+									"key": "Web_Url",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.html",
+									"type": "text"
+								},
+								{
+									"key": "Image_URL",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.jpg",
+									"type": "text"
+								},
+								{
+									"key": "Offline_Image",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
+									"type": "text"
+								},
+								{
+									"key": "Mp4_URL",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
+									"type": "text"
+								},
+								{
+									"key": "Status",
+									"value": "Active",
+									"description": "[Active | Suspended]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444",
+							"host": [
+								"localhost"
+							],
+							"port": "4444"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Device",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api_key",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Status",
+									"value": "Active",
+									"description": "[Active | Suspended]",
+									"type": "text"
+								},
+								{
+									"key": "Status_Message",
+									"value": "This Is Status Message",
+									"type": "text"
+								},
+								{
+									"key": "Display_Type",
+									"value": "2",
+									"description": "[1 | 2 | 3]",
+									"type": "text"
+								},
+								{
+									"key": "Web_Url",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Image_URL",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Offline_Image",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Status",
+									"value": "",
+									"description": "[Active | Suspended]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444?Device_ID=fc6ef405e2764bfa&Device_Token=token",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"query": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa"
+								},
+								{
+									"key": "Device_Token",
+									"value": "token"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Device",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api_key",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4444?Device_ID=fc6ef405e2764bfa&Device_Token=token",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"query": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa"
+								},
+								{
+									"key": "Device_Token",
+									"value": "token"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "unRegistered Device Table",
+			"item": [
+				{
+					"name": "Get unRegistered Device",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4444/unregistered",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"unregistered"
+							],
+							"query": [
+								{
+									"key": "Unregistered_Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"disabled": true
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Command Table",
+			"item": [
+				{
+					"name": "Create Command",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"type": "text"
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"type": "text"
+								},
+								{
+									"key": "Command_Type",
+									"value": "Restart",
+									"description": "[Restart | Screenshot]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444/command",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"command"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Command",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:4444/command",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"command"
+							],
+							"query": [
+								{
+									"key": "Device_ID",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "Device_Token",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "Command_Type",
+									"value": "",
+									"description": "[Restart | Screenshot]",
+									"disabled": true
+								},
+								{
+									"key": "Command_Status",
+									"value": "",
+									"description": "[pending | executing | success | fail]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Command",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:4444/command?Command_ID=1",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"command"
+							],
+							"query": [
+								{
+									"key": "Command_ID",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ping Server",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4444/ping",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ServerUrl",
+			"value": "localhost:4444"
+		}
+	]
+}
