@@ -7,32 +7,27 @@ const DeviceTable = require("../Model/Device.table");
 // SQLite Config
 const sql =
   process.env.NODE_ENV == "production"
-    ? new Sequelize(
-        "tvmenutest",
-        process.env.DB_USER,
-        process.env.DB_PASSWORD,
-        {
-          host: "localhost",
-          dialect: "mssql",
-          port: "1433",
-          pool: {
-            min: 0,
-            max: 10,
-            idle: 25000,
-            acquire: 25000,
-            requestTimeout: 30000,
+    ? new Sequelize("test", process.env.DB_USER, process.env.DB_PASSWORD, {
+        host: "localhost",
+        dialect: "mssql",
+        port: "1433",
+        pool: {
+          min: 0,
+          max: 10,
+          idle: 25000,
+          acquire: 25000,
+          requestTimeout: 30000,
+        },
+        logging: false,
+        define: {
+          timestamps: false,
+        },
+        dialectOptions: {
+          options: {
+            encrypt: false,
           },
-          logging: false,
-          define: {
-            timestamps: false,
-          },
-          dialectOptions: {
-            options: {
-              encrypt: false,
-            },
-          },
-        }
-      )
+        },
+      })
     : new Sequelize({
         dialect: "sqlite",
         storage: "./database.sqlite",

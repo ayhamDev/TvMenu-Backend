@@ -21,13 +21,13 @@ const GetDevice = async (req, res) => {
           IP_Address: req.clientIp,
           First_Date_Time_Hit: Date.now(),
           Requested_Count: 1,
-          Log_History: JSON.stringify([
-            {
-              IP_Address: req.clientIp,
-              timestamp: Date.now(),
-              Date: moment(Date.now()).format("LLLL"),
-            },
-          ]),
+          // Log_History: JSON.stringify([
+          //   {
+          //     IP_Address: req.clientIp,
+          //     timestamp: Date.now(),
+          //     Date: moment(Date.now()).format("LLLL"),
+          //   },
+          // ]),
         });
         res.json({
           msg: "This Device Has Been Requested To Be Registered.",
@@ -37,13 +37,13 @@ const GetDevice = async (req, res) => {
         RegisteredDevice.Requested_Count = RegisteredDevice.Requested_Count + 1;
         RegisteredDevice.Last_Date_Time_Hit = Date.now();
         RegisteredDevice.IP_Address = req.clientIp;
-        let Logs = JSON.parse(RegisteredDevice.Log_History);
-        Logs.push({
-          IP_Address: req.clientIp,
-          time: Date.now(),
-          Date: moment(Date.now()).format("LLLL"),
-        });
-        RegisteredDevice.Log_History = JSON.stringify(Logs);
+        // let Logs = JSON.parse(RegisteredDevice.Log_History);
+        // Logs.push({
+        //   IP_Address: req.clientIp,
+        //   time: Date.now(),
+        //   Date: moment(Date.now()).format("LLLL"),
+        // });
+        // RegisteredDevice.Log_History = JSON.stringify(Logs);
         await RegisteredDevice.save();
         res.json({
           msg: "This Device Has Been Requested To Be Registered.",

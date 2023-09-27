@@ -22,14 +22,14 @@ app.use(requestIp.mw());
 io.attach(HttpServer);
 
 // db Migrations
-// sql
-//   .sync()
-//   .then(() => {
-//     console.log("synced");
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
+sql
+  .sync()
+  .then(() => {
+    console.log("synced");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // db production
 app.use(express.urlencoded({ extended: false }));

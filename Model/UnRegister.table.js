@@ -28,14 +28,13 @@ const UnRegisterTable = (sql) =>
       allowNull: true,
     },
     Requested_Count: {
-      type: DataTypes.NUMBER,
-      allowNull: false,
-      defaultValue: 1,
-    },
-    Log_History: {
-      type: DataTypes.STRING,
+      type: DataTypes.BIGINT,
       allowNull: false,
     },
+    // Log_History: {
+    //   type: DataTypes.TEXT("long"),
+    //   allowNull: false,
+    // },
   });
 
 module.exports = UnRegisterTable;
