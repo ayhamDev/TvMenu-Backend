@@ -15,7 +15,7 @@ const sql = new Sequelize({
 });
 
 //   //  Microsoft SQL Server Config
-// const sql = new Sequelize("TVmenu", process.env.DB_USER, process.env.DB_USER, {
+// const sql = new Sequelize("TVmenu", process.env.DB_USER, process.env.DB_PASSWORD, {
 //   host: "localhost",
 //   dialect: "mssql",
 //   port: "1433",
