@@ -21,7 +21,8 @@ const SocketLogin = async (
       },
     });
     if (RegisteredDevice) {
-      RegisteredDevice.Requested_Count = RegisteredDevice.Requested_Count + 1;
+      RegisteredDevice.Requested_Count =
+        Number(RegisteredDevice.Requested_Count) + 1;
       RegisteredDevice.Last_Date_Time_Hit = Date.now();
       RegisteredDevice.IP_Address = socket.conn.remoteAddress;
       // let Logs = JSON.parse(RegisteredDevice.Log_History);

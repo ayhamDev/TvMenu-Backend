@@ -34,7 +34,8 @@ const GetDevice = async (req, res) => {
           status: 101,
         });
       } else {
-        RegisteredDevice.Requested_Count = RegisteredDevice.Requested_Count + 1;
+        RegisteredDevice.Requested_Count =
+          Number(RegisteredDevice.Requested_Count) + 1;
         RegisteredDevice.Last_Date_Time_Hit = Date.now();
         RegisteredDevice.IP_Address = req.clientIp;
         // let Logs = JSON.parse(RegisteredDevice.Log_History);
