@@ -29,6 +29,7 @@ io.on("connection", async (socket) => {
     });
     if (FoundCommand) {
       FoundCommand.Command_Status = "executing";
+      FoundCommand.ExecutedAt = Date.now();
       await FoundCommand.save();
     }
   });
