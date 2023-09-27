@@ -23,7 +23,7 @@ io.attach(HttpServer);
 
 // db Migrations
 sql
-  .sync()
+  .sync({ force: true })
   .then(() => {
     console.log("synced");
   })
