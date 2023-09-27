@@ -15,22 +15,23 @@ const sql = new Sequelize({
 });
 
 //   //  Microsoft SQL Server Config
-// const sql = new Sequelize("TVmenu","TVBackendUser","Hello!@!@!@2023A",{
+// const sql = new Sequelize("TVmenu", process.env.DB_USER, process.env.DB_USER, {
 //   host: "localhost",
 //   dialect: "mssql",
-//   port: '1433',
+//   port: "1433",
 //   pool: {
-//     min:0,
+//     min: 0,
 //     max: 10,
-//     idle:25000,
+//     idle: 25000,
 //     acquire: 25000,
-//     requestTimeout: 30000
+//     requestTimeout: 30000,
 //   },
-//    dialectOptions: {
+//   dialectOptions: {
 //     options: {
-//       "encrypt": false
-//     }
+//       encrypt: false,
+//     },
 //   },
+// });
 
 module.exports.sql = sql;
 module.exports.device = DeviceTable(sql);
