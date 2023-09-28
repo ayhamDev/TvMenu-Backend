@@ -23,6 +23,8 @@ lib-cov
 coverage
 *.lcov
 uploads/*
+*.db
+*.sqlite
 # nyc test coverage
 .nyc_output
 

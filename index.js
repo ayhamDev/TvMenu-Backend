@@ -4,14 +4,10 @@ const app = express();
 const { createServer } = require("http");
 const PORT = process.env.PORT || 4444;
 const cors = require("cors");
-const { sql, device, UnRegisteredDevice, Command } = require("./utils/db");
-const { query, body, validationResult } = require("express-validator");
+const { sql } = require("./utils/db");
 const requestIp = require("request-ip");
-const moment = require("moment/moment");
-const { Server } = require("socket.io");
 const { CommandRouter } = require("./Routes/Command.route");
 const { VerifyAPiKey } = require("./Middleware/VerifyApiKey");
-const { SocketLogin } = require("./Middleware/SocketLogin");
 const { UnRegisteredRouter } = require("./Routes/UnRegistered.route");
 const { DeviceRouter } = require("./Routes/Device.route");
 const { io } = require("./utils/Socket");
@@ -22,14 +18,14 @@ app.use(requestIp.mw());
 io.attach(HttpServer);
 
 // db Migrations
-sql
-  .sync({ force: true })
-  .then(() => {
-    console.log("synced");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// sql
+//   .sync({ force: true })
+//   .then(() => {
+//     console.log("synced");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 // db production
 app.use(express.urlencoded({ extended: false }));

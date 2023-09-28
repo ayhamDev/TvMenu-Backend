@@ -25,13 +25,13 @@ const SocketLogin = async (
         Number(RegisteredDevice.Requested_Count) + 1;
       RegisteredDevice.Last_Date_Time_Hit = Date.now();
       RegisteredDevice.IP_Address = socket.conn.remoteAddress;
-      // let Logs = JSON.parse(RegisteredDevice.Log_History);
-      // Logs.push({
-      //   IP_Address: socket.conn.remoteAddress,
-      //   time: Date.now(),
-      //   Date: moment(Date.now()).format("LLLL"),
-      // });
-      // RegisteredDevice.Log_History = JSON.stringify(Logs);
+      let Logs = RegisteredDevice.Log_History;
+      Logs.push({
+        IP_Address: socket.conn.remoteAddress,
+        time: Date.now(),
+        Date: moment(Date.now()).format("LLLL"),
+      });
+      RegisteredDevice.Log_History = Logs;
       await RegisteredDevice.save();
     } else {
       await UnRegisteredDevice.create({
@@ -40,13 +40,13 @@ const SocketLogin = async (
         IP_Address: socket.conn.remoteAddress,
         First_Date_Time_Hit: Date.now(),
         Requested_Count: 1,
-        // Log_History: JSON.stringify([
-        //   {
-        //     IP_Address: socket.conn.remoteAddress,
-        //     timestamp: Date.now(),
-        //     Date: moment(Date.now()).format("LLLL"),
-        //   },
-        // ]),
+        Log_History: [
+          {
+            IP_Address: socket.conn.remoteAddress,
+            timestamp: Date.now(),
+            Date: moment(Date.now()).format("LLLL"),
+          },
+        ],
       });
     }
     next(new Error("Device Not Found"));
