@@ -1,10 +1,10 @@
 {
 	"info": {
 		"_postman_id": "1627064c-24bf-4283-8094-f93807e13654",
-		"name": "Main",
+		"name": "Menuone",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17180270",
-		"_collection_link": "https://web.postman.co/workspace/TvMenu~76b84211-dfa3-4e28-b7a1-eb35479678ff/collection/17180270-1627064c-24bf-4283-8094-f93807e13654?source=collection_link"
+		"_collection_link": "https://bold-shadow-875846.postman.co/workspace/TvMenu~76b84211-dfa3-4e28-b7a1-eb35479678ff/collection/17180270-1627064c-24bf-4283-8094-f93807e13654?action=share&source=collection_link&creator=17180270"
 	},
 	"item": [
 		{
@@ -154,35 +154,14 @@
 									"type": "text"
 								},
 								{
-									"key": "Display_Type",
-									"value": "3",
-									"description": "[1 | 2 |3]",
-									"type": "text"
-								},
-								{
-									"key": "Web_Url",
-									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.html",
-									"type": "text"
-								},
-								{
-									"key": "Image_URL",
-									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.jpg",
-									"type": "text"
-								},
-								{
-									"key": "Offline_Image",
-									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
-									"type": "text"
-								},
-								{
-									"key": "Mp4_URL",
-									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
-									"type": "text"
-								},
-								{
 									"key": "Status",
 									"value": "Active",
 									"description": "[Active | Suspended]",
+									"type": "text"
+								},
+								{
+									"key": "Status_Message",
+									"value": "This is Status Message",
 									"type": "text"
 								}
 							]
@@ -549,6 +528,409 @@
 								{
 									"key": "Command_ID",
 									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Programs Table",
+			"item": [
+				{
+					"name": "Create Program",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"type": "text"
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"type": "text"
+								},
+								{
+									"key": "Program_Status",
+									"value": "Active",
+									"description": "[Active | Suspended]",
+									"type": "text"
+								},
+								{
+									"key": "Program_Name",
+									"value": "Name",
+									"type": "text"
+								},
+								{
+									"key": "Program_Layer_Number",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "Start_DateTime",
+									"value": "2023-09-20T00:00:00.000Z",
+									"type": "text"
+								},
+								{
+									"key": "End_DateTime",
+									"value": "2023-09-30T00:00:00.000Z",
+									"type": "text"
+								},
+								{
+									"key": "Program_Type",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "Program_Web_Url",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/Clock.html",
+									"type": "text"
+								},
+								{
+									"key": "Program_Image_Url",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.jpg",
+									"type": "text"
+								},
+								{
+									"key": "Program_MP4_Url",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
+									"type": "text"
+								},
+								{
+									"key": "Program_Note",
+									"value": "This is Note",
+									"type": "text"
+								},
+								{
+									"key": "Program_X",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "Program_Y",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "Program_W",
+									"value": "200",
+									"description": "[Number | Number % ]",
+									"type": "text"
+								},
+								{
+									"key": "Program_H",
+									"value": "200",
+									"description": "[Number | Number % ]",
+									"type": "text"
+								},
+								{
+									"key": "Program_Duration",
+									"value": "20",
+									"description": "Number  in Seconds",
+									"type": "text"
+								},
+								{
+									"key": "Program_Transition",
+									"value": "fadeInUpBig",
+									"type": "text"
+								},
+								{
+									"key": "Next_Loop_Seconds",
+									"value": "300",
+									"description": "Number  in Seconds",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444/program",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"program"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Program",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_Status",
+									"value": "Active",
+									"description": "[Active | Suspended]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_Name",
+									"value": "Name21",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_Layer_Number",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Start_DateTime",
+									"value": "2023-09-20T00:00:00.000Z",
+									"type": "text"
+								},
+								{
+									"key": "End_DateTime",
+									"value": "2023-10-30T00:00:00.000Z",
+									"type": "text"
+								},
+								{
+									"key": "Program_Type",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_Web_Url",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/Clock.html",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_Image_Url",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.jpg",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_MP4_Url",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_Note",
+									"value": "This is Note",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_X",
+									"value": "20",
+									"description": "[Number | Number % ]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_Y",
+									"value": "50",
+									"description": "[Number | Number % ]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_W",
+									"value": "200",
+									"description": "[Number | Number % ]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_H",
+									"value": "100%",
+									"description": "[Number | Number % ]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Program_Duration",
+									"value": "0",
+									"description": "[Number  in Seconds |  0 means no loop]",
+									"type": "text"
+								},
+								{
+									"key": "Program_Transition",
+									"value": "fadeInUpBig",
+									"description": "https://github.com/oblador/react-native-animatable#animations-2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Next_Loop_Seconds",
+									"value": "10",
+									"description": "[Number  in Seconds ]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444/program?Program_Row_Number=1",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"program"
+							],
+							"query": [
+								{
+									"key": "Program_Row_Number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Program",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:4444/program?Program_Row_Number=5",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"program"
+							],
+							"query": [
+								{
+									"key": "Program_Row_Number",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Program",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4444/program",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"program"
+							],
+							"query": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"disabled": true
+								},
+								{
+									"key": "Program_Row_Number",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"disabled": true
 								}
 							]
 						}
