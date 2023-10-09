@@ -1,8 +1,9 @@
 const { validationResult } = require("express-validator");
 const { io } = require("../../utils/Socket");
 const { device } = require("../../utils/db");
+const { response, request } = require("express");
 
-const PatchDevice = async (req, res) => {
+const PatchDevice = async (req = request, res = response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).json(result.array());
   try {

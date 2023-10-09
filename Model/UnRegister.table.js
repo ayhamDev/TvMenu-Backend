@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const UnRegisterTable = (sql) =>
-  sql.define("unregistered_device", {
+  sql.define("Devices_Unregistered", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,

@@ -11,6 +11,7 @@ const { VerifyAPiKey } = require("./Middleware/VerifyApiKey");
 const { UnRegisteredRouter } = require("./Routes/UnRegistered.route");
 const { DeviceRouter } = require("./Routes/Device.route");
 const { io } = require("./utils/Socket");
+const { ProgramRouter } = require("./Routes/Programs.route");
 const HttpServer = createServer(app);
 
 app.use(cors());
@@ -47,8 +48,8 @@ app.use(VerifyAPiKey);
 
 app.use(DeviceRouter);
 app.use("/unregistered", UnRegisteredRouter);
-
 app.use("/command", CommandRouter);
+app.use("/program", ProgramRouter);
 
 // Command
 

@@ -1,7 +1,8 @@
 const { validationResult } = require("express-validator");
 const { device, UnRegisteredDevice } = require("../../utils/db");
+const { response, request } = require("express");
 
-const GetDevice = async (req, res) => {
+const GetDevice = async (req = request, res = response) => {
   const { Device_ID, Device_Token } = req.query;
   if (Device_ID && Device_Token) {
     const Device = await device.findOne({

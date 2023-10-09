@@ -19,11 +19,6 @@ Router.post(
   "/",
   body("Device_ID").isString().notEmpty(),
   body("Device_Token").isString().notEmpty(),
-  body("Display_Type").isNumeric().notEmpty(),
-  body("Web_Url").isString().notEmpty(),
-  body("Image_URL").isString().notEmpty(),
-  body("Mp4_URL").isString().notEmpty(),
-  body("Offline_Image").isString().notEmpty(),
   body("Status").isIn(["Active", "Suspended"]).optional(),
   body("Status_Message").isString().optional(),
   CreateDevice
@@ -42,10 +37,6 @@ Router.patch(
   body("Device_ID").isString().optional(),
   body("Device_Token").isString().optional(),
   body("Display_Type").isNumeric().optional(),
-  body("Web_Url").isString().optional(),
-  body("Image_URL").isString().optional(),
-  body("Mp4_URL").isString().optional(),
-  body("Offline_Image").isString().optional(),
   PatchDevice
 );
 

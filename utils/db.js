@@ -2,6 +2,7 @@ const { Sequelize } = require("sequelize");
 const CommandTable = require("../Model/Command.table");
 const UnRegisterTable = require("../Model/UnRegister.table");
 const DeviceTable = require("../Model/Device.table");
+const ProgramsTable = require("../Model/Programs.table");
 
 // Dev env (sqlite)
 // SQLite Config
@@ -41,3 +42,4 @@ module.exports.sql = sql;
 module.exports.device = DeviceTable(sql);
 module.exports.UnRegisteredDevice = UnRegisterTable(sql);
 module.exports.Command = CommandTable(sql);
+module.exports.Programs = ProgramsTable(sql);

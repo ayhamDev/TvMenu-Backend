@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const DeviceTable = (sql) =>
-  sql.define("device", {
+  sql.define("Devices", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -35,27 +35,6 @@ const DeviceTable = (sql) =>
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Display_Type: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    Web_Url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    Image_URL: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    Mp4_URL: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    Offline_Image: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-
     Last_Online_hit: {
       type: DataTypes.DATE,
       allowNull: true,

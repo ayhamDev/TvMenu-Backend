@@ -1,7 +1,8 @@
 const { validationResult } = require("express-validator");
 const { device, UnRegisteredDevice } = require("../../utils/db");
+const { response, request } = require("express");
 
-const CreateDevice = async (req, res) => {
+const CreateDevice = async (req = request, res = response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).json(result.array());
   try {
@@ -30,6 +31,7 @@ const CreateDevice = async (req, res) => {
         Unregistered_Device_ID: req.body.Device_ID,
         Device_Token: req.body.Device_Token,
       },
+      force: true,
     });
     res.json({
       message: "Device Created successfully",

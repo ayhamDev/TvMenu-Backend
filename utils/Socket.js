@@ -1,6 +1,6 @@
 const { Server } = require("socket.io");
 const { SocketLogin } = require("../Middleware/SocketLogin");
-const { device, Command } = require("./db");
+const { device, Command, Programs } = require("./db");
 const fs = require("fs");
 const moment = require("moment");
 const UpdateLastOnline = require("./UpdateLastOnline");
@@ -88,8 +88,14 @@ io.on("connection", async (socket) => {
       Command_Status: ["pending", "executing"],
     },
   });
-
+  const Program = await Programs.findAll({
+    where: {
+      Device_ID,
+      Device_Token,
+    },
+  });
   io.to(socket.id).emit("device_commands", Commands);
+  io.to(socket.id).emit("device_programs", Program);
   io.to(socket.id).emit("device_data", socket.data);
 });
 

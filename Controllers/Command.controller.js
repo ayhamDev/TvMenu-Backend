@@ -1,8 +1,9 @@
 const { validationResult } = require("express-validator");
 const { Command, device } = require("../utils/db");
 const { io } = require("../utils/Socket");
+const { request, response } = require("express");
 
-const GetCommands = async (req, res) => {
+const GetCommands = async (req = request, res = response) => {
   if (req.query) {
     const commands = await Command.findAll({
       where: {
@@ -15,7 +16,7 @@ const GetCommands = async (req, res) => {
     res.json(commands);
   }
 };
-const CreateCommand = async (req, res) => {
+const CreateCommand = async (req = request, res = response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).json(result.array());
   const { Device_ID, Device_Token, Command_Type } = req.body;
@@ -54,7 +55,7 @@ const CreateCommand = async (req, res) => {
     });
   }
 };
-const DeleteCommand = async (req, res) => {
+const DeleteCommand = async (req = request, res = response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).json(result.array());
   try {
@@ -62,6 +63,7 @@ const DeleteCommand = async (req, res) => {
       where: {
         Command_ID: req.query.Command_ID,
       },
+      force: true,
     });
     if (command == 0)
       return res.json({

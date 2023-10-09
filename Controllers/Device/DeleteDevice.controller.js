@@ -1,8 +1,9 @@
 const { validationResult } = require("express-validator");
 const { io } = require("../../utils/Socket");
 const { device } = require("../../utils/db");
+const { response, request } = require("express");
 
-const DeleteDevice = async (req, res) => {
+const DeleteDevice = async (req = request, res = response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).json(result.array());
   try {
@@ -24,6 +25,7 @@ const DeleteDevice = async (req, res) => {
           Device_ID: req.query.Device_ID,
           Device_Token: req.query.Device_Token,
         },
+        force: true,
       });
       if (DeletedDevice == 0)
         return res.json({
