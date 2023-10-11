@@ -84,13 +84,19 @@ const ProgramsTable = (sql) =>
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    Program_Transition: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     Next_Loop_Seconds: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    Program_Transition: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "fadeInUpBig",
+    },
+    Program_Transition_End: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "fadeOutDownBig",
     },
   });
 

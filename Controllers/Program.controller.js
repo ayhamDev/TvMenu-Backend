@@ -76,7 +76,6 @@ const CreateProgram = async (req = request, res = response) => {
       Device_Token: Device_Token,
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json({
       message: "Failed To Create Command For The Device.",
       Device_ID: Device_ID,
@@ -191,5 +190,4 @@ const PatchProgram = async (req = request, res = response) => {
     });
   }
 };
-
 module.exports = { CreateProgram, GetProgram, DeleteProgram, PatchProgram };

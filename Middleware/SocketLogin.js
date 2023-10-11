@@ -1,5 +1,5 @@
 const { Socket } = require("socket.io");
-const { device, UnRegisteredDevice } = require("../utils/db");
+const { device, UnRegisteredDevice, LogWriter } = require("../utils/db");
 const moment = require("moment/moment");
 const UpdateLastOnline = require("../utils/UpdateLastOnline");
 
@@ -20,18 +20,17 @@ const SocketLogin = async (
         Device_Token: Device_Token,
       },
     });
+    const LogWriterData = await LogWriter.findOne({
+      where: {
+        Device_ID: Device_ID,
+        Device_Token: Device_Token,
+        Log_Type: "NewDevice",
+      },
+    });
     if (RegisteredDevice) {
-      RegisteredDevice.Requested_Count =
-        Number(RegisteredDevice.Requested_Count) + 1;
       RegisteredDevice.Last_Date_Time_Hit = Date.now();
       RegisteredDevice.IP_Address = socket.conn.remoteAddress;
-      let Logs = RegisteredDevice.Log_History;
-      Logs.push({
-        IP_Address: socket.conn.remoteAddress,
-        time: Date.now(),
-        Date: moment(Date.now()).format("LLLL"),
-      });
-      RegisteredDevice.Log_History = Logs;
+      RegisteredDevice.Requested_Count++;
       await RegisteredDevice.save();
     } else {
       await UnRegisteredDevice.create({
@@ -40,7 +39,25 @@ const SocketLogin = async (
         IP_Address: socket.conn.remoteAddress,
         First_Date_Time_Hit: Date.now(),
         Requested_Count: 1,
-        Log_History: [
+      });
+    }
+    if (LogWriterData) {
+      LogWriterData.Ip_Address = socket.conn.remoteAddress;
+      const logData = LogWriterData.Log_Data;
+      logData.push({
+        IP_Address: socket.conn.remoteAddress,
+        timestamp: Date.now(),
+        Date: moment(Date.now()).format("LLLL"),
+      });
+      LogWriterData.Log_Data = logData;
+      await LogWriterData.save();
+    } else {
+      await LogWriter.create({
+        Log_Type: "NewDevice",
+        Ip_Address: socket.conn.remoteAddress,
+        Device_ID: Device_ID,
+        Device_Token: Device_Token,
+        Log_Data: [
           {
             IP_Address: socket.conn.remoteAddress,
             timestamp: Date.now(),

@@ -14,7 +14,7 @@ const PatchDevice = async (req = request, res = response) => {
       },
     });
     if (!FoundDevice)
-      return res.status(400).json({
+      return res.status(404).json({
         message:
           "Device Not Found, The Device uuid is Invaild or The Token is Invaild",
       });

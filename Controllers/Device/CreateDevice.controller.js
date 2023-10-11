@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const { device, UnRegisteredDevice } = require("../../utils/db");
+const { device, UnRegisteredDevice, LogWriter } = require("../../utils/db");
 const { response, request } = require("express");
 
 const CreateDevice = async (req = request, res = response) => {
@@ -30,6 +30,15 @@ const CreateDevice = async (req = request, res = response) => {
       where: {
         Unregistered_Device_ID: req.body.Device_ID,
         Device_Token: req.body.Device_Token,
+      },
+      force: true,
+    });
+
+    await LogWriter.destroy({
+      where: {
+        Device_ID: req.body.Device_ID,
+        Device_Token: req.body.Device_Token,
+        Log_Type: "NewDevice",
       },
       force: true,
     });

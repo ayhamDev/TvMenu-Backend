@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const DeviceTable = (sql) =>
-  sql.define("Devices", {
+  sql.define("Device", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,

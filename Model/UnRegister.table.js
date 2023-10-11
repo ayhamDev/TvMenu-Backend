@@ -30,15 +30,7 @@ const UnRegisterTable = (sql) =>
     Requested_Count: {
       type: DataTypes.BIGINT,
       allowNull: false,
-    },
-    Log_History: {
-      type: DataTypes.TEXT,
-      get: function () {
-        return JSON.parse(this.getDataValue("Log_History"));
-      },
-      set: function (value) {
-        return this.setDataValue("Log_History", JSON.stringify(value));
-      },
+      defaultValue: 1,
     },
   });
 
