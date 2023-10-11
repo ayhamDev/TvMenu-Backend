@@ -213,13 +213,15 @@
 								{
 									"key": "Status_Message",
 									"value": "This Is Status Message",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "Display_Type",
 									"value": "2",
 									"description": "[1 | 2 | 3]",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "Web_Url",
@@ -236,13 +238,6 @@
 								{
 									"key": "Offline_Image",
 									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "Status",
-									"value": "",
-									"description": "[Active | Suspended]",
 									"type": "text",
 									"disabled": true
 								}
@@ -585,7 +580,7 @@
 								},
 								{
 									"key": "Program_Layer_Number",
-									"value": "1",
+									"value": "2",
 									"type": "text"
 								},
 								{
@@ -595,7 +590,7 @@
 								},
 								{
 									"key": "End_DateTime",
-									"value": "2023-09-30T00:00:00.000Z",
+									"value": "2023-10-30T00:00:00.000Z",
 									"type": "text"
 								},
 								{
@@ -630,7 +625,7 @@
 								},
 								{
 									"key": "Program_Y",
-									"value": "100",
+									"value": "0",
 									"type": "text"
 								},
 								{
@@ -641,7 +636,7 @@
 								},
 								{
 									"key": "Program_H",
-									"value": "200",
+									"value": "100",
 									"description": "[Number | Number % ]",
 									"type": "text"
 								},
@@ -652,14 +647,19 @@
 									"type": "text"
 								},
 								{
+									"key": "Next_Loop_Seconds",
+									"value": "30",
+									"description": "Number  in Seconds",
+									"type": "text"
+								},
+								{
 									"key": "Program_Transition",
 									"value": "fadeInUpBig",
 									"type": "text"
 								},
 								{
-									"key": "Next_Loop_Seconds",
-									"value": "300",
-									"description": "Number  in Seconds",
+									"key": "Program_Transition_End",
+									"value": "fadeOutDownBig",
 									"type": "text"
 								}
 							]
@@ -734,12 +734,14 @@
 								{
 									"key": "Start_DateTime",
 									"value": "2023-09-20T00:00:00.000Z",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "End_DateTime",
 									"value": "2023-10-30T00:00:00.000Z",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "Program_Type",
@@ -794,34 +796,40 @@
 								},
 								{
 									"key": "Program_H",
-									"value": "100%",
+									"value": "100",
 									"description": "[Number | Number % ]",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "Program_Duration",
-									"value": "0",
+									"value": "6",
 									"description": "[Number  in Seconds |  0 means no loop]",
+									"type": "text"
+								},
+								{
+									"key": "Next_Loop_Seconds",
+									"value": "6",
+									"description": "[Number  in Seconds ]",
 									"type": "text"
 								},
 								{
 									"key": "Program_Transition",
 									"value": "fadeInUpBig",
 									"description": "https://github.com/oblador/react-native-animatable#animations-2",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								},
 								{
-									"key": "Next_Loop_Seconds",
-									"value": "10",
-									"description": "[Number  in Seconds ]",
-									"type": "text"
+									"key": "Program_Transition_End",
+									"value": "fadeOutDownBig",
+									"description": "https://github.com/oblador/react-native-animatable#animations-2",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:4444/program?Program_Row_Number=1",
+							"raw": "localhost:4444/program?Program_Row_Number=2",
 							"host": [
 								"localhost"
 							],
@@ -832,7 +840,7 @@
 							"query": [
 								{
 									"key": "Program_Row_Number",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -864,7 +872,7 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "localhost:4444/program?Program_Row_Number=5",
+							"raw": "localhost:4444/program?Program_Row_Number=1",
 							"host": [
 								"localhost"
 							],
@@ -875,7 +883,7 @@
 							"query": [
 								{
 									"key": "Program_Row_Number",
-									"value": "5"
+									"value": "1"
 								}
 							]
 						}
@@ -930,6 +938,675 @@
 								{
 									"key": "Device_Token",
 									"value": "token",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LogWriter Table",
+			"item": [
+				{
+					"name": "Get All Logs",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4444/log",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"log"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "Log_Type",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "Ip_Address",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "Device_ID",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "Device_Token",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Single Log",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4444/log/device",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"log",
+								"device"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "Log_Type",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "Ip_Address",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "Device_ID",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "Device_Token",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Device Power Table",
+			"item": [
+				{
+					"name": "Create Device Power",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"type": "text"
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"type": "text"
+								},
+								{
+									"key": "Sat_On",
+									"value": "00:00:00",
+									"description": "Time Format (HH:MM:SS)",
+									"type": "text"
+								},
+								{
+									"key": "Sat_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Sun_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Sun_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Mon_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Mon_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Tue_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Tue_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Wed_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Wed_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Thu_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Thu_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Fri_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Fri_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Command_Txt1",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "Command_Txt2",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "Command_On",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "Command_Off",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444/power",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"power"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Device Power",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"type": "text"
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"type": "text"
+								},
+								{
+									"key": "Sat_On",
+									"value": "00:00:30",
+									"description": "Time Format (HH:MM:SS)",
+									"type": "text"
+								},
+								{
+									"key": "Sat_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Sun_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Sun_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Mon_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Mon_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Tue_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Tue_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Wed_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Wed_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Thu_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Thu_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Fri_On",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Fri_Off",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "Command_Txt1",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "Command_Txt2",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "Command_On",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "Command_Off",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444/power?Row_Number=2",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"power"
+							],
+							"query": [
+								{
+									"key": "Row_Number",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Device Power",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:4444/power?Row_Number=2",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"power"
+							],
+							"query": [
+								{
+									"key": "Row_Number",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Device Power",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4444/power",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"power"
+							],
+							"query": [
+								{
+									"key": "Device_ID",
+									"value": "fc6ef405e2764bfa",
+									"disabled": true
+								},
+								{
+									"key": "Device_Token",
+									"value": "token",
+									"disabled": true
+								},
+								{
+									"key": "Sat_On",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Sat_Off",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Sun_On",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Sun_Off",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Mon_On",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Mon_Off",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Tue_On",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Tue_Off",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Wed_On",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Wed_Off",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Thu_On",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Thu_Off",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Fri_On",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Fri_Off",
+									"value": "00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "Command_Txt1",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "Command_Txt2",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "Command_On",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "Command_Off",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device Power",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "API_KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4444/power/2",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"power",
+								"2"
+							],
+							"query": [
+								{
+									"key": "Row_Number",
+									"value": "2",
 									"disabled": true
 								}
 							]
