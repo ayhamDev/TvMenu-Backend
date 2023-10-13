@@ -14,6 +14,7 @@ const { io } = require("./utils/Socket");
 const { ProgramRouter } = require("./Routes/Programs.route");
 const { LogWriterRouter } = require("./Routes/LogWriter.route");
 const { PowerRouter } = require("./Routes/Power.route");
+const { OfflineRouter } = require("./Routes/OfflineRouter.route");
 const HttpServer = createServer(app);
 
 app.use(cors());
@@ -46,6 +47,8 @@ app.get("/ping", (req, res) => {
   res.send("pong");
 });
 // Is Admin Middlerware
+app.use("/offline", OfflineRouter);
+
 app.use(VerifyAPiKey);
 
 app.use(DeviceRouter);
@@ -60,5 +63,3 @@ app.use("/power", PowerRouter);
 HttpServer.listen(PORT, () => {
   console.log("Server Is Running On Port:", PORT);
 });
-
-module.exports.io = io;
