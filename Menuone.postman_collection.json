@@ -163,6 +163,12 @@
 									"key": "Status_Message",
 									"value": "This is Status Message",
 									"type": "text"
+								},
+								{
+									"key": "Offline_Image",
+									"value": "http://petraerp.w20.wh-2.com/Ayham/Offline.jpg",
+									"description": "url",
+									"type": "text"
 								}
 							]
 						},
@@ -224,22 +230,10 @@
 									"disabled": true
 								},
 								{
-									"key": "Web_Url",
-									"value": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "Image_URL",
-									"value": "",
-									"type": "text",
-									"disabled": true
-								},
-								{
 									"key": "Offline_Image",
-									"value": "http://petraerp.w20.wh-2.com/Ayham/TV1.mp4",
-									"type": "text",
-									"disabled": true
+									"value": "http://petraerp.w20.wh-2.com/Ayham/Offline.jpg",
+									"description": "url",
+									"type": "text"
 								}
 							]
 						},
