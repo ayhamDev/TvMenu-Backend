@@ -4,7 +4,7 @@ const app = express();
 const { createServer } = require("http");
 const PORT = process.env.PORT || 4444;
 const cors = require("cors");
-const { sql, LogWriter } = require("./utils/db");
+const { sql } = require("./utils/db");
 const requestIp = require("request-ip");
 const { CommandRouter } = require("./Routes/Command.route");
 const { VerifyAPiKey } = require("./Middleware/VerifyApiKey");
@@ -15,12 +15,13 @@ const { ProgramRouter } = require("./Routes/Programs.route");
 const { LogWriterRouter } = require("./Routes/LogWriter.route");
 const { PowerRouter } = require("./Routes/Power.route");
 const { OfflineRouter } = require("./Routes/OfflineRouter.route");
+const CreateDefaultAdmin = require("./utils/CreateDefaultAdmin");
+const { AdminRouter } = require("./Routes/Admin.route");
 const HttpServer = createServer(app);
 
 app.use(cors());
 app.use(requestIp.mw());
 io.attach(HttpServer);
-
 // db Migrations
 // sql
 //   .sync({ force: true })
@@ -38,6 +39,8 @@ sql
   .authenticate()
   .then(async () => {
     console.log("connected To Database.");
+    CreateDefaultAdmin();
+    // sql.drop();
   })
   .catch((err) => {
     console.log(err);
@@ -48,8 +51,7 @@ app.get("/ping", (req, res) => {
 });
 // Is Admin Middlerware
 app.use("/offline", OfflineRouter);
-
-app.use(VerifyAPiKey);
+app.use("/admin", AdminRouter);
 
 app.use(DeviceRouter);
 app.use("/unregistered", UnRegisteredRouter);

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 const DevicePowerTable = (sql) =>
   sql.define("Device_Power", {
-    Row_Number: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,

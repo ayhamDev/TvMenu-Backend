@@ -14,7 +14,7 @@ const DeviceTable = (sql) =>
     },
     Offline_Image: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     Status: {
       type: DataTypes.ENUM(["Active", "Suspended"]),

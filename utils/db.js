@@ -5,6 +5,7 @@ const DeviceTable = require("../Model/Device.table");
 const ProgramsTable = require("../Model/Programs.table");
 const LogTable = require("../Model/LogWriter.table");
 const DevicePowerTable = require("../Model/Power.table");
+const AdminTable = require("../Model/Admin.table");
 
 // Dev env (sqlite)
 // SQLite Config
@@ -46,4 +47,5 @@ module.exports.UnRegisteredDevice = UnRegisterTable(sql);
 module.exports.Command = CommandTable(sql);
 module.exports.Programs = ProgramsTable(sql);
 module.exports.LogWriter = LogTable(sql);
+module.exports.Admin = AdminTable(sql);
 module.exports.DevicePower = DevicePowerTable(sql);

@@ -9,6 +9,8 @@ const io = new Server(null, {
   cors: {
     origin: ["*"],
   },
+  pingTimeout: 2000,
+  pingInterval: 10000,
 });
 io.use(SocketLogin);
 io.on("connection", async (socket) => {
@@ -18,7 +20,19 @@ io.on("connection", async (socket) => {
     where: { Device_ID, Device_Token },
   });
   SocketDevice.connectionID = socket.id;
+  SocketDevice.Last_Online_hit = Date.now();
   await SocketDevice.save();
+
+  socket.on("disconnect", async () => {
+    UpdateLastOnline(Device_ID, Device_Token);
+    const SocketDevice = await device.findOne({
+      where: { Device_ID, Device_Token },
+    });
+    if (!SocketDevice) return null;
+    SocketDevice.connectionID = null;
+    SocketDevice.Last_Online_hit = Date.now();
+    await SocketDevice.save();
+  });
   socket.on("device_command@executing", async (command) => {
     UpdateLastOnline(Device_ID, Device_Token);
     const FoundCommand = await Command.findOne({
@@ -72,15 +86,6 @@ io.on("connection", async (socket) => {
     }
   });
 
-  socket.on("disconnect", async () => {
-    UpdateLastOnline(Device_ID, Device_Token);
-    const SocketDevice = await device.findOne({
-      where: { Device_ID, Device_Token },
-    });
-    if (!SocketDevice) return null;
-    SocketDevice.connectionID = null;
-    await SocketDevice.save();
-  });
   const Commands = await Command.findAll({
     where: {
       Device_ID,
