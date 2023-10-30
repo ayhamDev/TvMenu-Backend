@@ -43,19 +43,16 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "localhost:4444?Device_ID=fc6ef405e2764bfa&Device_Token=token",
+							"raw": "localhost:4444",
 							"host": [
 								"localhost"
 							],
 							"port": "4444",
 							"query": [
 								{
-									"key": "Device_ID",
-									"value": "fc6ef405e2764bfa"
-								},
-								{
-									"key": "Device_Token",
-									"value": "token"
+									"key": "id",
+									"value": "2",
+									"disabled": true
 								}
 							]
 						}
@@ -214,7 +211,8 @@
 									"key": "Status",
 									"value": "Active",
 									"description": "[Active | Suspended]",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "Status_Message",
@@ -233,24 +231,31 @@
 									"key": "Offline_Image",
 									"value": "http://petraerp.w20.wh-2.com/Ayham/Offline.jpg",
 									"description": "url",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "User_ID",
+									"value": "fab6fb28-029a-4db4-9c85-9c1801c4b929",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:4444?Device_ID=fc6ef405e2764bfa&Device_Token=token",
+							"raw": "localhost:4444?id=fc6ef405e2764bfa",
 							"host": [
 								"localhost"
 							],
 							"port": "4444",
 							"query": [
 								{
-									"key": "Device_ID",
+									"key": "id",
 									"value": "fc6ef405e2764bfa"
 								},
 								{
 									"key": "Device_Token",
-									"value": "token"
+									"value": "token",
+									"disabled": true
 								}
 							]
 						}
@@ -553,12 +558,18 @@
 							"urlencoded": [
 								{
 									"key": "Device_ID",
-									"value": "fc6ef405e2764bfa",
+									"value": "[\"fc6ef405e2764bfa\"]",
+									"description": "array of device_id",
 									"type": "text"
 								},
 								{
 									"key": "Device_Token",
 									"value": "token",
+									"type": "text"
+								},
+								{
+									"key": "User_ID",
+									"value": "59bae4d4-11c3-4599-8ac7-b99ed17b0ffe",
 									"type": "text"
 								},
 								{
@@ -579,17 +590,17 @@
 								},
 								{
 									"key": "Start_DateTime",
-									"value": "2023-09-20T00:00:00.000Z",
+									"value": "1698422485184",
 									"type": "text"
 								},
 								{
 									"key": "End_DateTime",
-									"value": "2023-10-30T00:00:00.000Z",
+									"value": "1698422485184",
 									"type": "text"
 								},
 								{
 									"key": "Program_Type",
-									"value": "1",
+									"value": "2",
 									"type": "text"
 								},
 								{
@@ -624,25 +635,25 @@
 								},
 								{
 									"key": "Program_W",
-									"value": "200",
+									"value": "100%",
 									"description": "[Number | Number % ]",
 									"type": "text"
 								},
 								{
 									"key": "Program_H",
-									"value": "100",
+									"value": "100%",
 									"description": "[Number | Number % ]",
 									"type": "text"
 								},
 								{
 									"key": "Program_Duration",
-									"value": "20",
+									"value": "0",
 									"description": "Number  in Seconds",
 									"type": "text"
 								},
 								{
 									"key": "Next_Loop_Seconds",
-									"value": "30",
+									"value": "0",
 									"description": "Number  in Seconds",
 									"type": "text"
 								},
@@ -696,32 +707,34 @@
 							"urlencoded": [
 								{
 									"key": "Device_ID",
-									"value": "fc6ef405e2764bfa",
-									"type": "text",
-									"disabled": true
+									"value": "[\"fc6ef405e2764bfa\"]",
+									"type": "text"
 								},
 								{
 									"key": "Device_Token",
 									"value": "token",
-									"type": "text",
-									"disabled": true
+									"type": "text"
+								},
+								{
+									"key": "User_ID",
+									"value": "83f9aa47-ddb0-4149-b0e3-dc435dd5bde6",
+									"type": "text"
 								},
 								{
 									"key": "Program_Status",
 									"value": "Active",
 									"description": "[Active | Suspended]",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								},
 								{
 									"key": "Program_Name",
-									"value": "Name21",
+									"value": "Name",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "Program_Layer_Number",
-									"value": "1",
+									"value": "2",
 									"type": "text",
 									"disabled": true
 								},
@@ -769,49 +782,52 @@
 								},
 								{
 									"key": "Program_X",
-									"value": "20",
+									"value": "0",
 									"description": "[Number | Number % ]",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "Program_Y",
-									"value": "50",
+									"value": "0",
 									"description": "[Number | Number % ]",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "Program_W",
-									"value": "200",
+									"value": "100%",
 									"description": "[Number | Number % ]",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "Program_H",
-									"value": "100",
+									"value": "100%",
 									"description": "[Number | Number % ]",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "Program_Duration",
-									"value": "6",
+									"value": "0",
 									"description": "[Number  in Seconds |  0 means no loop]",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "Next_Loop_Seconds",
-									"value": "6",
+									"value": "0",
 									"description": "[Number  in Seconds ]",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "Program_Transition",
 									"value": "fadeInUpBig",
 									"description": "https://github.com/oblador/react-native-animatable#animations-2",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "Program_Transition_End",
@@ -823,7 +839,7 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:4444/program?Program_Row_Number=2",
+							"raw": "localhost:4444/program?Program_Row_Number=16",
 							"host": [
 								"localhost"
 							],
@@ -834,7 +850,7 @@
 							"query": [
 								{
 									"key": "Program_Row_Number",
-									"value": "2"
+									"value": "16"
 								}
 							]
 						}
@@ -866,7 +882,7 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "localhost:4444/program?Program_Row_Number=1",
+							"raw": "localhost:4444/program?Program_Row_Number=7",
 							"host": [
 								"localhost"
 							],
@@ -877,7 +893,7 @@
 							"query": [
 								{
 									"key": "Program_Row_Number",
-									"value": "1"
+									"value": "7"
 								}
 							]
 						}
@@ -910,7 +926,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:4444/program",
+							"raw": "localhost:4444/program?Program_Row_Number=20",
 							"host": [
 								"localhost"
 							],
@@ -926,8 +942,7 @@
 								},
 								{
 									"key": "Program_Row_Number",
-									"value": "1",
-									"disabled": true
+									"value": "20"
 								},
 								{
 									"key": "Device_Token",
@@ -1047,27 +1062,27 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "",
+									"value": "21",
 									"disabled": true
 								},
 								{
 									"key": "Log_Type",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "Ip_Address",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "Device_ID",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "Device_Token",
-									"value": null,
+									"value": "",
 									"disabled": true
 								}
 							]
@@ -1603,6 +1618,114 @@
 									"value": "2",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Table",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "client2@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "client",
+									"type": "text"
+								},
+								{
+									"key": "Role",
+									"value": "Client",
+									"description": "[Admin | Client]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4444/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNjk3NjkwOTc1LCJleHAiOjE2OTc3MDE3NzV9.4-AwJosJcCYriv5R2mM05SwnJ9Cn85kI2iYlrUF06nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4444/user/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"user",
+								"verify"
 							]
 						}
 					},
