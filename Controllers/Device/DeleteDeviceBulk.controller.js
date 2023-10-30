@@ -8,12 +8,12 @@ const DeleteDeviceBulk = async (req = request, res = response) => {
   try {
     await device.destroy({
       where: {
-        id: DevicesID,
+        Device_ID: DevicesID,
       },
     });
     await LogWriter.destroy({
       where: {
-        id: DevicesID,
+        Device_ID: DevicesID,
       },
     });
     res.json({
@@ -21,6 +21,8 @@ const DeleteDeviceBulk = async (req = request, res = response) => {
       DevicesID,
     });
   } catch (err) {
+    console.log(err);
+
     res.status(500).json({
       message: "Failed To Delete Devices",
       error: err,

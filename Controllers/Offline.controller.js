@@ -3,14 +3,13 @@ const { device } = require("../utils/db");
 const { validationResult } = require("express-validator");
 const { default: axios } = require("axios");
 const imageToBase64 = require("image-to-base64");
-const fs = require("fs");
 
 const GetOffline = async (req = request, res = response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).json(result.array());
-  const { Device_ID, Device_Token } = req.query;
+  const { Device_ID, Device_Token, User_ID } = req.query;
   const Device = await device.findOne({
-    where: { Device_ID, Device_Token },
+    where: { Device_ID, Device_Token, User_ID },
   });
   if (!Device)
     return res.status(404).json({

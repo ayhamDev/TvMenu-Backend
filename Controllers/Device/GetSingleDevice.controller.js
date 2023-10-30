@@ -1,19 +1,19 @@
 const { device } = require("../../utils/db");
 const { response, request } = require("express");
 
-const GetDevice = async (req = request, res = response) => {
+const GetSingleDevice = async (req = request, res = response) => {
   try {
     if (Object.keys(req.query).length != 0) {
-      const Device = await device.findAll({
+      const Device = await device.findOne({
         where: req.query,
       });
       if (!Device) {
-        res.status(404).json([]);
+        res.status(404).json(null);
       } else {
         res.json(Device);
       }
     } else {
-      res.json(await device.findAll());
+      res.json(null);
     }
   } catch (err) {
     res.status(400).json({
@@ -21,5 +21,4 @@ const GetDevice = async (req = request, res = response) => {
     });
   }
 };
-
-module.exports.GetDevice = GetDevice;
+module.exports.GetSingleDevice = GetSingleDevice;

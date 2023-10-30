@@ -7,6 +7,7 @@ Router.get(
   "/",
   query("Device_ID").isString(),
   query("Device_Token").isString(),
+  query("User_ID").isString(),
   GetOffline
 );
 

@@ -20,6 +20,7 @@ const CreateDeviceBulk = async (req = request, res = response) => {
       return {
         Device_ID: device.Unregistered_Device_ID,
         Device_Token: device.Device_Token,
+        User_ID: device.User_ID,
       };
     });
     try {
@@ -50,6 +51,8 @@ const CreateDeviceBulk = async (req = request, res = response) => {
         });
       }
     } catch (err) {
+      console.log(err);
+
       res.status(500).json({
         message: "Failed To Create Devices",
         error: err,

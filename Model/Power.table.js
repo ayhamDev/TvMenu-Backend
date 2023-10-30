@@ -15,6 +15,10 @@ const DevicePowerTable = (sql) =>
       type: DataTypes.STRING,
       allowNull: false,
     },
+    User_ID: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
     Sat_On: {
       type: DataTypes.TIME,
       allowNull: false,

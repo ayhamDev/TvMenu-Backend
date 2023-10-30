@@ -10,6 +10,7 @@ const CreateDevice = async (req = request, res = response) => {
       where: {
         Device_ID: req.body.Device_ID,
         Device_Token: req.body.Device_Token,
+        User_ID: req.body.User_ID,
       },
     });
     if (FoundDevice)
@@ -20,6 +21,7 @@ const CreateDevice = async (req = request, res = response) => {
     const CreatedDevice = await device.create({
       Device_ID: req.body.Device_ID,
       Device_Token: req.body.Device_Token,
+      User_ID: req.body.User_ID,
       Display_Type: req.body.Display_Type,
       Offline_Image: req.body.Offline_Image,
     });
@@ -27,6 +29,7 @@ const CreateDevice = async (req = request, res = response) => {
       where: {
         Unregistered_Device_ID: req.body.Device_ID,
         Device_Token: req.body.Device_Token,
+        // User_ID: req.body.User_ID,
       },
       force: true,
     });
@@ -35,6 +38,7 @@ const CreateDevice = async (req = request, res = response) => {
       where: {
         Device_ID: req.body.Device_ID,
         Device_Token: req.body.Device_Token,
+        User_ID: req.body.User_ID,
         Log_Type: "NewDevice",
       },
       force: true,
@@ -43,6 +47,7 @@ const CreateDevice = async (req = request, res = response) => {
       message: "Device Created successfully",
       Device_ID: req.body.Device_ID,
       Device_Token: req.body.Device_Token,
+      User_ID: req.body.User_ID,
     });
   } catch (err) {
     console.log(err);

@@ -3,11 +3,22 @@ const { DataTypes } = require("sequelize");
 const ProgramsTable = (sql) =>
   sql.define("Device_Programs", {
     Device_ID: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: "[]",
+      get: function () {
+        return JSON.parse(this.getDataValue("Device_ID"));
+      },
+      set: function (value) {
+        return this.setDataValue("Device_ID", JSON.stringify(value));
+      },
     },
     Device_Token: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    User_ID: {
+      type: DataTypes.UUID,
       allowNull: false,
     },
     Program_Row_Number: {
@@ -91,12 +102,12 @@ const ProgramsTable = (sql) =>
     Program_Transition: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "fadeInUpBig",
+      defaultValue: "fadeIn",
     },
     Program_Transition_End: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "fadeOutDownBig",
+      defaultValue: "fadeOut",
     },
   });
 

@@ -2,10 +2,9 @@ const { DataTypes } = require("sequelize");
 
 const DeviceTable = (sql) =>
   sql.define("Device", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+    User_ID: {
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     connectionID: {
       type: DataTypes.STRING,
@@ -34,6 +33,7 @@ const DeviceTable = (sql) =>
     Device_ID: {
       type: DataTypes.STRING,
       allowNull: false,
+      primaryKey: true,
     },
     Device_Token: {
       type: DataTypes.STRING,

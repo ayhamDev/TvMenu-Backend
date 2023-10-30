@@ -15,6 +15,10 @@ const UnRegisterTable = (sql) =>
       type: DataTypes.STRING,
       allowNull: false,
     },
+    User_ID: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
     IP_Address: {
       type: DataTypes.STRING,
       allowNull: false,

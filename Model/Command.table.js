@@ -15,6 +15,10 @@ const CommandTable = (sql) =>
       type: DataTypes.STRING,
       allowNull: false,
     },
+    User_ID: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
     Command_Type: {
       type: DataTypes.ENUM(["Restart", "Screenshot"]),
       validate: {

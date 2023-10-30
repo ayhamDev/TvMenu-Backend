@@ -9,8 +9,7 @@ const PatchDevice = async (req = request, res = response) => {
   try {
     const FoundDevice = await device.findOne({
       where: {
-        Device_ID: req.query.Device_ID,
-        Device_Token: req.query.Device_Token,
+        Device_ID: req.query.id,
       },
     });
     if (!FoundDevice)

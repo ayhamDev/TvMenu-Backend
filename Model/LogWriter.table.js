@@ -2,10 +2,9 @@ const { DataTypes } = require("sequelize");
 
 const LogTable = (sql) =>
   sql.define("Log_Writer", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+    User_ID: {
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     Log_Type: {
       type: DataTypes.ENUM(["NewDevice"]),

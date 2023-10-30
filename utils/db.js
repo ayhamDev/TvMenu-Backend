@@ -5,7 +5,7 @@ const DeviceTable = require("../Model/Device.table");
 const ProgramsTable = require("../Model/Programs.table");
 const LogTable = require("../Model/LogWriter.table");
 const DevicePowerTable = require("../Model/Power.table");
-const AdminTable = require("../Model/Admin.table");
+const UsersTable = require("../Model/Users.table");
 
 // Dev env (sqlite)
 // SQLite Config
@@ -41,11 +41,20 @@ const sql =
         },
       });
 
+const device = DeviceTable(sql);
+const UnRegisteredDevice = UnRegisterTable(sql);
+const Command = CommandTable(sql);
+const Programs = ProgramsTable(sql);
+const LogWriter = LogTable(sql);
+const User = UsersTable(sql);
+const DevicePower = DevicePowerTable(sql);
+module.exports = {
+  device,
+  UnRegisteredDevice,
+  Command,
+  Programs,
+  LogWriter,
+  User,
+  DevicePower,
+};
 module.exports.sql = sql;
-module.exports.device = DeviceTable(sql);
-module.exports.UnRegisteredDevice = UnRegisterTable(sql);
-module.exports.Command = CommandTable(sql);
-module.exports.Programs = ProgramsTable(sql);
-module.exports.LogWriter = LogTable(sql);
-module.exports.Admin = AdminTable(sql);
-module.exports.DevicePower = DevicePowerTable(sql);

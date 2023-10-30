@@ -16,7 +16,7 @@ const { LogWriterRouter } = require("./Routes/LogWriter.route");
 const { PowerRouter } = require("./Routes/Power.route");
 const { OfflineRouter } = require("./Routes/OfflineRouter.route");
 const CreateDefaultAdmin = require("./utils/CreateDefaultAdmin");
-const { AdminRouter } = require("./Routes/Admin.route");
+const { UserRouter } = require("./Routes/User.route");
 const HttpServer = createServer(app);
 
 app.use(cors());
@@ -51,7 +51,7 @@ app.get("/ping", (req, res) => {
 });
 // Is Admin Middlerware
 app.use("/offline", OfflineRouter);
-app.use("/admin", AdminRouter);
+app.use("/user", UserRouter);
 
 app.use(DeviceRouter);
 app.use("/unregistered", UnRegisteredRouter);

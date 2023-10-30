@@ -17,18 +17,18 @@ const {
   PatchDeviceBulk,
 } = require("../Controllers/Device/PatchDeviceBulk.controller");
 const { body, query } = require("express-validator");
+const {
+  GetSingleDevice,
+} = require("../Controllers/Device/GetSingleDevice.controller");
 
 const Router = express.Router();
-Router.get(
-  "/",
-  body("Device_ID").isString().optional(),
-  query("Device_Token").isString().optional(),
-  GetDevice
-);
+Router.get("/", GetDevice);
+Router.get("/single", GetSingleDevice);
 Router.post(
   "/",
   body("Device_ID").isString().notEmpty(),
   body("Device_Token").isString().notEmpty(),
+  // body("User_ID").isUUID(),
   body("Status").isIn(["Active", "Suspended"]).optional(),
   body("Status_Message").isString().optional(),
   CreateDevice
@@ -44,8 +44,7 @@ Router.delete("/bulk", body("data").isArray(), DeleteDeviceBulk);
 
 Router.patch(
   "/",
-  query("Device_ID").isString().optional(),
-  query("Device_Token").isString().optional(),
+  query("id").isString(),
   body("Device_ID").isString().optional(),
   body("Device_Token").isString().optional(),
   body("Display_Type").isNumeric().optional(),
@@ -54,7 +53,6 @@ Router.patch(
 
 Router.patch(
   "/bulk",
-  query("field").isString(),
   query("value").isString(),
   body("data").isArray(),
   PatchDeviceBulk

@@ -1,14 +1,18 @@
-const { Admin } = require("./db");
+const { UUIDV4 } = require("sequelize");
+const { User } = require("./db");
 const bycrpt = require("bcrypt");
+const { v4: uuid } = require("uuid");
 
 const CreateDefaultAdmin = async () => {
-  const FirstTime = await Admin.findOne();
+  const FirstTime = await User.findOne();
   if (!FirstTime) {
     console.log("Creating Admin Account.");
     const HashedPassword = await bycrpt.hash("admin", 10);
-    await Admin.create({
+    await User.create({
+      User_ID: uuid(),
       email: "admin@example.com",
       password: HashedPassword,
+      Role: "Admin",
     });
     console.log("Admin Account Created.");
   }

@@ -10,16 +10,11 @@ const UnRegisteredController = async (req = request, res = response) => {
       },
     });
     if (!Devices) return res.json({});
-    // for (let index = 0; index < Devices.length; index++) {
-    //   Devices[index].Log_History = JSON.parse(Devices[index].Log_History);
-    // }
+
     res.json(Devices);
   } else {
     const Devices = await UnRegisteredDevice.findAll();
     if (!Devices) return res.json([]);
-    // for (let index = 0; index < Devices.length; index++) {
-    //   Devices[index].Log_History = JSON.parse(Devices[index].Log_History);
-    // }
     res.json(Devices);
   }
 };

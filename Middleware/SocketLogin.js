@@ -7,10 +7,11 @@ const SocketLogin = async (
   socket = Socket,
   next = (error = Error) => undefined
 ) => {
-  const { Device_ID, Device_Token } = socket.handshake.auth;
-  if (!Device_ID || !Device_Token) return next(new Error("unauthorized"));
+  const { Device_ID, Device_Token, User_ID } = socket.handshake.auth;
+  if (!Device_ID || !Device_Token || !User_ID)
+    return next(new Error("unauthorized"));
   const Device = await device.findOne({
-    where: { Device_ID, Device_Token },
+    where: { Device_ID, Device_Token, User_ID },
   });
 
   if (!Device) {
@@ -18,12 +19,14 @@ const SocketLogin = async (
       where: {
         Unregistered_Device_ID: Device_ID,
         Device_Token: Device_Token,
+        User_ID: User_ID,
       },
     });
     const LogWriterData = await LogWriter.findOne({
       where: {
         Device_ID: Device_ID,
         Device_Token: Device_Token,
+        User_ID: User_ID,
         Log_Type: "NewDevice",
       },
     });
@@ -36,6 +39,7 @@ const SocketLogin = async (
       await UnRegisteredDevice.create({
         Unregistered_Device_ID: Device_ID,
         Device_Token,
+        User_ID: User_ID,
         IP_Address: socket.conn.remoteAddress,
         First_Date_Time_Hit: Date.now(),
         Requested_Count: 1,
@@ -57,6 +61,7 @@ const SocketLogin = async (
         Ip_Address: socket.conn.remoteAddress,
         Device_ID: Device_ID,
         Device_Token: Device_Token,
+        User_ID: User_ID,
         Log_Data: [
           {
             IP_Address: socket.conn.remoteAddress,

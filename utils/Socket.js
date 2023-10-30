@@ -14,10 +14,10 @@ const io = new Server(null, {
 });
 io.use(SocketLogin);
 io.on("connection", async (socket) => {
-  const { Device_ID, Device_Token } = socket.handshake.auth;
+  const { Device_ID, Device_Token, User_ID } = socket.handshake.auth;
 
   const SocketDevice = await device.findOne({
-    where: { Device_ID, Device_Token },
+    where: { Device_ID, Device_Token, User_ID },
   });
   SocketDevice.connectionID = socket.id;
   SocketDevice.Last_Online_hit = Date.now();
@@ -90,17 +90,27 @@ io.on("connection", async (socket) => {
     where: {
       Device_ID,
       Device_Token,
+      User_ID: User_ID,
       Command_Status: ["pending", "executing"],
     },
   });
-  const Program = await Programs.findAll({
+  const AllPrograms = await Programs.findAll({
     where: {
-      Device_ID,
       Device_Token,
+      User_ID: User_ID,
     },
   });
+  const DevicePrograms = [];
+  if (AllPrograms.length != 0) {
+    AllPrograms.forEach((program) => {
+      if (program.Device_ID.includes(Device_ID)) {
+        DevicePrograms.push(program);
+      }
+    });
+  }
+
   io.to(socket.id).emit("device_commands", Commands);
-  io.to(socket.id).emit("device_programs", Program);
+  io.to(socket.id).emit("device_programs", DevicePrograms);
   io.to(socket.id).emit("device_data", socket.data);
 });
 

@@ -27,6 +27,11 @@ const DeleteDevice = async (req = request, res = response) => {
         },
         force: true,
       });
+      await LogWriter.destroy({
+        where: {
+          Device_ID: req.query.Device_ID,
+        },
+      });
       if (DeletedDevice == 0)
         return res.json({
           message: "The Device Doesn't Exist.",
