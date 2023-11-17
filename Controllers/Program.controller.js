@@ -5,12 +5,22 @@ const { io } = require("../utils/Socket");
 
 const GetProgram = async (req = request, res = response) => {
   try {
+    const deviceID = req.query.Device_ID;
+    req?.query?.Device_ID ? delete req.query.Device_ID : null;
+
     const Program = await Programs.findAll({
       where: { ...req.query },
     });
-    res.json(Program);
+    if (deviceID) {
+      const FilteredPrograms = Program.filter((device) =>
+        device.Device_ID.includes(deviceID)
+      );
+      res.json(FilteredPrograms);
+    } else {
+      res.json(Program);
+    }
   } catch (err) {
-    res.status(400).json({
+    res.status(500).json({
       message: "Server Error",
     });
   }
@@ -43,27 +53,7 @@ const CreateProgram = async (req = request, res = response) => {
     } catch (err) {
       error = true;
       return res.status(500).json({
-        message: "Server Error",
-      });
-    }
-  }
-  if (typeof req.body.Start_DateTime == "string") {
-    try {
-      req.body.Start_DateTime = Number(req.body.Start_DateTime);
-    } catch (err) {
-      error = true;
-      return res.json({
-        message: "Server Error",
-      });
-    }
-  }
-  if (typeof req.body.End_DateTime == "string") {
-    try {
-      req.body.End_DateTime = Number(req.body.End_DateTime);
-    } catch (err) {
-      error = true;
-      return res.json({
-        message: "Server Error",
+        message: "Server Error: Devices ID Parse Error",
       });
     }
   }
@@ -280,6 +270,7 @@ const PatchProgram = async (req = request, res = response) => {
         Program_Row_Number: req.query.Program_Row_Number,
       },
     });
+    const OldDevices = Program.Device_ID;
     if (!Program)
       return res.status(400).json({
         message: "Program Doesn't Exists",
@@ -296,9 +287,10 @@ const PatchProgram = async (req = request, res = response) => {
         typeof Data.Device_ID == "string"
           ? JSON.parse(Data.Device_ID)
           : Data.Device_ID;
+      const devicesIdSet = [...new Set([...DeivcesId, ...OldDevices])];
       const FoundDevices = await device.findAll({
         where: {
-          Device_ID: DeivcesId,
+          Device_ID: devicesIdSet,
           Device_Token: Data.Device_Token,
           User_ID: Data.User_ID,
         },
@@ -317,7 +309,6 @@ const PatchProgram = async (req = request, res = response) => {
           .get(device?.connectionID)
           ?.emit("device_programs", programs);
       });
-
       res.json({
         message: "Program Updated Successfully.",
         Program_Row_Number: req.query.Program_Row_Number,

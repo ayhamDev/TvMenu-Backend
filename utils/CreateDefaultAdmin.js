@@ -4,7 +4,12 @@ const bycrpt = require("bcrypt");
 const { v4: uuid } = require("uuid");
 
 const CreateDefaultAdmin = async () => {
-  const FirstTime = await User.findOne();
+  const FirstTime = await User.findOne({
+    where: {
+      Role: "Admin",
+    },
+  });
+
   if (!FirstTime) {
     console.log("Creating Admin Account.");
     const HashedPassword = await bycrpt.hash("admin", 10);

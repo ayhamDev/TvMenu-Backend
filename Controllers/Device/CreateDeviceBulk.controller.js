@@ -46,7 +46,10 @@ const CreateDeviceBulk = async (req = request, res = response) => {
       } catch (err) {
         console.log(err);
         res.status(500).json({
-          message: "Failed To Create Devices",
+          message:
+            DevicesID.length == 1
+              ? "Failed To Create Device"
+              : "Failed To Create Devices",
           error: err,
         });
       }
@@ -54,13 +57,19 @@ const CreateDeviceBulk = async (req = request, res = response) => {
       console.log(err);
 
       res.status(500).json({
-        message: "Failed To Create Devices",
+        message:
+          DevicesID.length == 1
+            ? "Failed To Create Device"
+            : "Failed To Create Devices",
         error: err,
       });
     }
   } catch (err) {
     res.status(500).json({
-      message: "Failed To Create Devices",
+      message:
+        DevicesID.length == 1
+          ? "Failed To Create Device"
+          : "Failed To Create Devices",
       error: err,
     });
   }

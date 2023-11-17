@@ -29,12 +29,18 @@ const PatchDeviceBulk = async (req = request, res = response) => {
       });
     }
     res.json({
-      message: "Updated All Devices Successfully",
+      message:
+        DevicesID.length == 1
+          ? "Updated Device Successfully"
+          : "Updated All Devices Successfully",
       DevicesID,
     });
   } catch (err) {
     res.status(500).json({
-      message: "Failed To Update Devices",
+      message:
+        DevicesID.length == 1
+          ? "Failed To Update Device"
+          : "Failed To Update Devices",
       error: err,
     });
   }

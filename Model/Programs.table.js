@@ -31,16 +31,20 @@ const ProgramsTable = (sql) =>
       type: DataTypes.STRING,
       allowNull: false,
     },
+    Program_Note: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     Program_Layer_Number: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     Start_DateTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     End_DateTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     Program_Type: {
@@ -71,10 +75,7 @@ const ProgramsTable = (sql) =>
       allowNull: false,
       defaultValue: "Active",
     },
-    Program_Note: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+
     Program_X: {
       type: DataTypes.STRING,
       allowNull: false,

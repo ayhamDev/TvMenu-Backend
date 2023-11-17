@@ -2,6 +2,14 @@ const { DataTypes } = require("sequelize");
 
 const DeviceTable = (sql) =>
   sql.define("Device", {
+    Device_Name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    Device_Note: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     User_ID: {
       type: DataTypes.UUID,
       allowNull: false,

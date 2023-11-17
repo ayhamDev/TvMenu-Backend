@@ -24,6 +24,8 @@ const CreateDevice = async (req = request, res = response) => {
       User_ID: req.body.User_ID,
       Display_Type: req.body.Display_Type,
       Offline_Image: req.body.Offline_Image,
+      Device_Name: req.body.Device_Name,
+      Device_Note: req.body.Device_Notes,
     });
     await UnRegisteredDevice.destroy({
       where: {

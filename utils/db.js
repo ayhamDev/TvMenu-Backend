@@ -6,6 +6,7 @@ const ProgramsTable = require("../Model/Programs.table");
 const LogTable = require("../Model/LogWriter.table");
 const DevicePowerTable = require("../Model/Power.table");
 const UsersTable = require("../Model/Users.table");
+const ClientTable = require("../Model/Client.table");
 
 // Dev env (sqlite)
 // SQLite Config
@@ -48,6 +49,7 @@ const Programs = ProgramsTable(sql);
 const LogWriter = LogTable(sql);
 const User = UsersTable(sql);
 const DevicePower = DevicePowerTable(sql);
+const Client = ClientTable(sql);
 module.exports = {
   device,
   UnRegisteredDevice,
@@ -56,5 +58,6 @@ module.exports = {
   LogWriter,
   User,
   DevicePower,
+  Client,
 };
 module.exports.sql = sql;
